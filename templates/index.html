@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .box {
+            width: 40px;
+            text-align: center;
+
+        }
+
+        .wrapper {
+            margin: 0px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-5 my-5">
+        <center>
+            <form action="/solve" METHOD="POST">
+                <div class="top my-2">
+
+                    <input type="text" class="box" name="g00" autocomplete="off" maxlength="1" value="{{board[0][0]}}">
+                    <input type="text" class="box" name="g01" autocomplete="off" maxlength="1" value="{{board[0][1]}}">
+                    <input type="text" class="box" name="g02" autocomplete="off" maxlength="1" value="{{board[0][2]}}">
+                    <input type="text" class="box" name="g03" autocomplete="off" maxlength="1" value="{{board[0][3]}}">
+                    <input type="text" class="box" name="g04" autocomplete="off" maxlength="1" value="{{board[0][4]}}">
+                    <input type="text" class="box" name="g05" autocomplete="off" maxlength="1" value="{{board[0][5]}}">
+                    <input type="text" class="box" name="g06" autocomplete="off" maxlength="1" value="{{board[0][6]}}">
+                    <input type="text" class="box" name="g07" autocomplete="off" maxlength="1" value="{{board[0][7]}}">
+                    <input type="text" class="box" name="g08" autocomplete="off" maxlength="1" value="{{board[0][8]}}"><br>
+
+                    <input type="text" class="box" name="g10" autocomplete="off" maxlength="1" value="{{board[1][0]}}">
+                    <input type="text" class="box" name="g11" autocomplete="off" maxlength="1" value="{{board[1][1]}}">
+                    <input type="text" class="box" name="g12" autocomplete="off" maxlength="1" value="{{board[1][2]}}">
+                    <input type="text" class="box" name="g13" autocomplete="off" maxlength="1" value="{{board[1][3]}}">
+                    <input type="text" class="box" name="g14" autocomplete="off" maxlength="1" value="{{board[1][4]}}">
+                    <input type="text" class="box" name="g15" autocomplete="off" maxlength="1" value="{{board[1][5]}}">
+                    <input type="text" class="box" name="g16" autocomplete="off" maxlength="1" value="{{board[1][6]}}">
+                    <input type="text" class="box" name="g17" autocomplete="off" maxlength="1" value="{{board[1][7]}}">
+                    <input type="text" class="box" name="g18" autocomplete="off" maxlength="1" value="{{board[1][8]}}"><br>
+
+                    <input type="text" class="box" name="g20" autocomplete="off" maxlength="1" value="{{board[2][0]}}">
+                    <input type="text" class="box" name="g21" autocomplete="off" maxlength="1" value="{{board[2][1]}}">
+                    <input type="text" class="box" name="g22" autocomplete="off" maxlength="1" value="{{board[2][2]}}">
+                    <input type="text" class="box" name="g23" autocomplete="off" maxlength="1" value="{{board[2][3]}}">
+                    <input type="text" class="box" name="g24" autocomplete="off" maxlength="1" value="{{board[2][4]}}">
+                    <input type="text" class="box" name="g25" autocomplete="off" maxlength="1" value="{{board[2][5]}}">
+                    <input type="text" class="box" name="g26" autocomplete="off" maxlength="1" value="{{board[2][6]}}">
+                    <input type="text" class="box" name="g27" autocomplete="off" maxlength="1" value="{{board[2][7]}}">
+                    <input type="text" class="box" name="g28" autocomplete="off" maxlength="1" value="{{board[2][8]}}"><br>
+                </div>
+
+                <div class="middle my-2">
+
+                    <input type="text" class="box" name="g30" autocomplete="off" maxlength="1" value="{{board[3][0]}}">
+                    <input type="text" class="box" name="g31" autocomplete="off" maxlength="1" value="{{board[3][1]}}">
+                    <input type="text" class="box" name="g32" autocomplete="off" maxlength="1" value="{{board[3][2]}}">
+                    <input type="text" class="box" name="g33" autocomplete="off" maxlength="1" value="{{board[3][3]}}">
+                    <input type="text" class="box" name="g34" autocomplete="off" maxlength="1" value="{{board[3][4]}}">
+                    <input type="text" class="box" name="g35" autocomplete="off" maxlength="1" value="{{board[3][5]}}">
+                    <input type="text" class="box" name="g36" autocomplete="off" maxlength="1" value="{{board[3][6]}}">
+                    <input type="text" class="box" name="g37" autocomplete="off" maxlength="1" value="{{board[3][7]}}">
+                    <input type="text" class="box" name="g38" autocomplete="off" maxlength="1" value="{{board[3][8]}}"><br>
+
+                    <input type="text" class="box" name="g40" autocomplete="off" maxlength="1" value="{{board[4][0]}}">
+                    <input type="text" class="box" name="g41" autocomplete="off" maxlength="1" value="{{board[4][1]}}">
+                    <input type="text" class="box" name="g42" autocomplete="off" maxlength="1" value="{{board[4][2]}}">
+                    <input type="text" class="box" name="g43" autocomplete="off" maxlength="1" value="{{board[4][3]}}">
+                    <input type="text" class="box" name="g44" autocomplete="off" maxlength="1" value="{{board[4][4]}}">
+                    <input type="text" class="box" name="g45" autocomplete="off" maxlength="1" value="{{board[4][5]}}">
+                    <input type="text" class="box" name="g46" autocomplete="off" maxlength="1" value="{{board[4][6]}}">
+                    <input type="text" class="box" name="g47" autocomplete="off" maxlength="1" value="{{board[4][7]}}">
+                    <input type="text" class="box" name="g48" autocomplete="off" maxlength="1" value="{{board[4][8]}}"><br>
+
+                    <input type="text" class="box" name="g50" autocomplete="off" maxlength="1" value="{{board[5][0]}}">
+                    <input type="text" class="box" name="g51" autocomplete="off" maxlength="1" value="{{board[5][1]}}">
+                    <input type="text" class="box" name="g52" autocomplete="off" maxlength="1" value="{{board[5][2]}}">
+                    <input type="text" class="box" name="g53" autocomplete="off" maxlength="1" value="{{board[5][3]}}">
+                    <input type="text" class="box" name="g54" autocomplete="off" maxlength="1" value="{{board[5][4]}}">
+                    <input type="text" class="box" name="g55" autocomplete="off" maxlength="1" value="{{board[5][5]}}">
+                    <input type="text" class="box" name="g56" autocomplete="off" maxlength="1" value="{{board[5][6]}}">
+                    <input type="text" class="box" name="g57" autocomplete="off" maxlength="1" value="{{board[5][7]}}">
+                    <input type="text" class="box" name="g58" autocomplete="off" maxlength="1" value="{{board[5][8]}}"><br>
+                </div>
+
+                <div class="bottom my-2">
+
+                    <input type="text" class="box" name="g60" autocomplete="off" maxlength="1" value="{{board[6][0]}}">
+                    <input type="text" class="box" name="g61" autocomplete="off" maxlength="1" value="{{board[6][1]}}">
+                    <input type="text" class="box" name="g62" autocomplete="off" maxlength="1" value="{{board[6][2]}}">
+                    <input type="text" class="box" name="g63" autocomplete="off" maxlength="1" value="{{board[6][3]}}">
+                    <input type="text" class="box" name="g64" autocomplete="off" maxlength="1" value="{{board[6][4]}}">
+                    <input type="text" class="box" name="g65" autocomplete="off" maxlength="1" value="{{board[6][5]}}">
+                    <input type="text" class="box" name="g66" autocomplete="off" maxlength="1" value="{{board[6][6]}}">
+                    <input type="text" class="box" name="g67" autocomplete="off" maxlength="1" value="{{board[6][7]}}">
+                    <input type="text" class="box" name="g68" autocomplete="off" maxlength="1" value="{{board[6][8]}}"><br>
+
+                    <input type="text" class="box" name="g70" autocomplete="off" maxlength="1" value="{{board[7][0]}}">
+                    <input type="text" class="box" name="g71" autocomplete="off" maxlength="1" value="{{board[7][1]}}">
+                    <input type="text" class="box" name="g72" autocomplete="off" maxlength="1" value="{{board[7][2]}}">
+                    <input type="text" class="box" name="g73" autocomplete="off" maxlength="1" value="{{board[7][3]}}">
+                    <input type="text" class="box" name="g74" autocomplete="off" maxlength="1" value="{{board[7][4]}}">
+                    <input type="text" class="box" name="g75" autocomplete="off" maxlength="1" value="{{board[7][5]}}">
+                    <input type="text" class="box" name="g76" autocomplete="off" maxlength="1" value="{{board[7][6]}}">
+                    <input type="text" class="box" name="g77" autocomplete="off" maxlength="1" value="{{board[7][7]}}">
+                    <input type="text" class="box" name="g78" autocomplete="off" maxlength="1" value="{{board[7][8]}}"><br>
+
+                    <input type="text" class="box" name="g80" autocomplete="off" maxlength="1" value="{{board[8][0]}}">
+                    <input type="text" class="box" name="g81" autocomplete="off" maxlength="1" value="{{board[8][1]}}">
+                    <input type="text" class="box" name="g82" autocomplete="off" maxlength="1" value="{{board[8][2]}}">
+                    <input type="text" class="box" name="g83" autocomplete="off" maxlength="1" value="{{board[8][3]}}">
+                    <input type="text" class="box" name="g84" autocomplete="off" maxlength="1" value="{{board[8][4]}}">
+                    <input type="text" class="box" name="g85" autocomplete="off" maxlength="1" value="{{board[8][5]}}">
+                    <input type="text" class="box" name="g86" autocomplete="off" maxlength="1" value="{{board[8][6]}}">
+                    <input type="text" class="box" name="g87" autocomplete="off" maxlength="1" value="{{board[8][7]}}">
+                    <input type="text" class="box" name="g88" autocomplete="off" maxlength="1" value="{{board[8][8]}}"><br>
+                </div>
+
+                <button class="btn btn-success">Get Solution</button>
+            </form>
+        </center>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
